@@ -16,6 +16,7 @@ library(lubridate)
 if (!'scrollytell' %in% installed.packages()) devtools::install_github("statistiekcbs/scrollytell")
 library(scrollytell)
 library(shinycssloaders)
+library(here)
 # library(leaflet)
 # library(sf)
 # library(geographr)
@@ -152,7 +153,10 @@ text <- function(num){
            text25,
            text26,
            text27,
-           text28
+           text28,
+           text29,
+           text30,
+           text31
     )
   )
 }
@@ -537,7 +541,7 @@ text16 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation </H2>
 text17 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Sex </H2>
               <br>
               This finding was consistent looking at both male and female 
-              patients, although a slightly greater shift was found for male 
+              patients, although a slightly greater shift was found for female 
               registrations.
               </p>")
 
@@ -660,6 +664,59 @@ text28 <- HTML("<H2> CMS Score Comparison - All Age Bands +13 Years </H2>
               found.
               </p>")
 
+text29 <- HTML("<H2> Hospital Admissions - Elective Inpatient </H2>
+              <br>
+              During our Task and Finish group meetings, many carers brought up
+              anecdotes that they and other carers they know had cancelled 
+              hospital operations because of the recovery time, because they had
+              no way of covering for their caring responsibilities. In the case
+              above (where registered carers have more similar health 
+              characteristics with people 10-15 years older than themselves) 
+              these anecdotes could explain the increased health risk of carers,
+              due to a lack of maintainance of known conditions.
+              <br>
+              <br>
+              In the case of 
+              our T&F group, many experiences were discussed. One carer 
+              had conditions flagged at
+              GP appointments which were not resolved with an elective 
+              operation, despite steady worsening over a number of years, 
+              resulting in a non-elective admission to hospital. Another carer
+              discussed cancelling an operation which would have resolved 
+              chronic pain issues - resulting in no further hospitalisation but
+              decreased quality of life.
+              <br>
+              <br>
+              Within our data set we do not have access to hospital bookings, 
+              and so were unable to directly compare the cancellation rates of 
+              carers and non-carers. However, as a proxy, we have been able to 
+              use SUS to compare population rates of elective inpatient 
+              admission to A&E attendances.
+              <br>
+              <br>
+              Interestingly, when we split the proportion of Leeds-registered 
+              patients who attended an elective inpatient spell (split by sex, 
+              age-band, and carer status), we generally find that registered 
+              carers are approximately as likely as non-registered carers.
+              </p>")
+
+text30 <- HTML("<H2> Hospital Admissions - A&E </H2>
+              <br>
+              However, when we look at the percentage of the population who 
+              attended A&E, we find that generally registered carers are more 
+              likely than non-registered carers to attend A&E, when split by 
+              sex and age-band.
+              <br>
+              <br>
+              This increase is generally seen more in female patients than male,
+              and for both male and female the biggest differences are seen 
+              around 40-59 year olds (although female 18-79 year olds 
+              near-consistently show this trend, wheras it is only really seen
+              for male 30-59 year old patients).
+              </p>")
+
+text31 <- HTML('<p><br> <br> <br> <br> <br> <br> <br> <br></p>')
+
 nel_text <- HTML(
   "<span style='font-size:20px'>
     How does the health of registered carers compare with non-carers?
@@ -760,7 +817,7 @@ introPlot <- ggplotly(introggPlot, tooltip = 'text') %>%
 ## Carer deprivation score density
 deprivation_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   group_by(signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
   group_by(deprivation_decile) %>%
@@ -819,7 +876,7 @@ deprivationTotalPlot <- neaten_plotly_labels(deprivationTotalPlot)
 
 deprivation_male_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   filter(sex == 'M') %>%
   group_by(sex, signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
@@ -878,7 +935,7 @@ deprivationPlot <- deprivationPlot %>%
 
 deprivation_female_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   filter(sex == 'F') %>%
   group_by(sex, signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
@@ -941,7 +998,7 @@ deprivationPlot <- neaten_plotly_labels(deprivationPlot)
 # Age Band
 deprivation_age_band_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   group_by(age_band, signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
   group_by(deprivation_decile) %>%
@@ -974,3 +1031,4 @@ load(here('data/nelPlots.RData'))
 nel_reference <- filter(nel_plots[[1]]$data, group)
 load(here('data/compPlots.RData'))
 load(here('data/oddsPlot.RData'))
+load(here('data/hospitalAdmissionPlots.RData'))

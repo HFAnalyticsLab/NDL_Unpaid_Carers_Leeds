@@ -31,7 +31,9 @@ ui <- fluidPage(
     HTML(
       "<center>
         <h1>Unpaid Carers in Leeds</h1>
-        <p style='font-size:26px'> by Ben Alcock </p>
+        <p style='font-size:26px'> by the Leeds Networked Data Lab team
+        <br>
+        part of NHS West Yorkshire ICB</p>
       </center>"
     )
   ),
@@ -142,7 +144,7 @@ ui <- fluidPage(
       # scrolly_section(id = 'assumed', render_text(6)),
       # scrolly_section(id = 'language_age', render_text(7)),
       # scrolly_section(id = 'odds_ratio', render_text(8)),
-      # scrolly_section(id = 'd_buffer', br()),
+      scrolly_section(id = 'd_buffer', br()),
       HTML('</center>')
     )
   ),
@@ -210,7 +212,7 @@ ui <- fluidPage(
       scrolly_section(id = "d_total", render_text(16)),
       scrolly_section(id = "d_sex", render_text(17)),
       scrolly_section(id = "d_age_band", render_text(18)),
-      scrolly_section(id = "d_buffer", br()),
+      scrolly_section(id = "d_age_band", render_text(31)),
       HTML('</center>')
     )
   ),
@@ -276,6 +278,8 @@ ui <- fluidPage(
       # scrolly_section(id = 30, render_text(25)),
       scrolly_section(id = 'original', render_text(27)),
       scrolly_section(id = 'optimal', render_text(28)),
+      scrolly_section(id = 'inpatient', render_text(29)),
+      scrolly_section(id = 'ae', render_text(30)),
       scrolly_section(id = 'd_buffer', br()),
       HTML('</center>')
     )
@@ -669,10 +673,13 @@ server <- function(input, output, session) {
           y = 0.005
         ) +
         geom_density(aes(nel), data = nel_reference, kernel = 'rectangular', size = 0.5)
-    } else {
+    } else if (offset %in% c('original', 'optimal')) {
       nelPlot <- comp_plot[[2 - (offset == 'original')]] +
         scale_fill_discrete(name = 'Carer') +
         xlab('Cambridge Emergency Admission Score')
+    } else {
+      if (offset == 'inpatient') nelPlot <- ip_plot
+      if (offset %in% c('ae', 'd_buffer')) nelPlot <- ae_plot
     }
     
     ggplotly(nelPlot) %>%
@@ -740,7 +747,7 @@ server <- function(input, output, session) {
           axis.title = element_text(size = rel(1.5))
         )
     } else {
-      filtered_period <- carer_period %>% filter(ceiling(year) <= years)
+      filtered_period <- carer_period %>% filter(year <= years + 0.5)
       
       period_plot <- carer_period %>%
         ggplot(aes(x = p, y = year)) + 
