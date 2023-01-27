@@ -235,10 +235,9 @@ intro_text <- HTML(
     aid for both carers and cared-for people.</li>
   </ul>
   <br>
-  As well as this, we also had access to <b>Secondary Care records</b> 
-  (inpatient, outpatient, A&E) and <b>Mental Health appointments</b>. All of the
-  above data sets were linkable at a person-level to some extent via 
-  pseudonymised patient identifiers.
+  As well as this, we also had access to <b>Secondary Care records</b>, including
+  inpatient appointments (elective/non-elective), and emergency attendances at
+  A&E.
   </p>"
 )
 
@@ -529,10 +528,11 @@ text16 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation </H2>
               who registered outside these times. Here, a shift to higher scores
               means that a greater number of patients from more deprived areas
               register as carers during the signal periods, and a shift to lower
-              scores means the inverse.
+              scores means the inverse. Statistical significance was gauged via
+              Mann-Whitney U tests.
               <br>
               <br>
-              We observed a statistically significant shift to lower deprivation
+              We observed a small but statistically significant shift to lower deprivation
               levels, signifying that during our signal periods people from 
               less deprived areas were more likely to register as carers at 
               their GP practices than those from more deprived areas.
@@ -540,17 +540,18 @@ text16 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation </H2>
 
 text17 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Sex </H2>
               <br>
-              This finding was consistent looking at both male and female 
-              patients, although a slightly greater shift was found for female 
-              registrations.
+              When splitting by sex, we find that female patients have a similar
+              statistically significant shift, while male patients have no 
+              statistical significance.
               </p>")
 
 text18 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Age Band
               </H2>
               <br>
-              Similarly, this finding held across all age-bands. The largest 
-              changes in registration level were seen at lower ages, with only 
-              minor shifts in demographics occuring in the 60-69 age band. 
+              Similarly, this finding held across some but not all age-bands,
+              with younger ages (<40) showing statistically significant shifts
+              towards areas of lower deprivation, while older ages (>=40) show
+              no statistical significance.
               </p>")
 
 text19 <- HTML("<H2> COVID Carer Registrations </H2>
@@ -585,10 +586,12 @@ text20 <- HTML("<H2> COVID Carer Registrations - IMD Shift </H2>
               Repeating the same methods to compare the deprivation levels of
               areas in which patients who registered during signal times to
               patients who registered in 'usual' times, we can see the same 
-              patterns - during these drives it was more often patients from
+              patterns, although enhanced - during these drives it was more often patients from
               less deprived areas who were identified at GP practices as carers,
               a finding which again holds true over the whole population, and 
-              when split by sex and age-band.
+              when split by sex and age-band. The magnitude of the shift during
+              the pandemic was much greater than pre-pandemic, as well as the
+              range of groups which featured significant shifts.
               <br><br>
               Please click the buttons above the plot to switch between the 
               overall IMD-shift, the shift split by sex, or split by age-band. 
@@ -751,9 +754,122 @@ nel_text <- HTML(
   the health needs of the two populations are.
   </p>")
 
-concludingtext <- HTML("")
-
-technicalnotes <- HTML("")
+concludingtext <- HTML(
+  "<span style='font-size:20px'>
+    Discussion and Conclusions
+  </span>
+  <br>
+  <br> 
+  <p>
+  In this work we have looked at unpaid carers in Leeds, focussing on 
+  registration rates by GP practices and secondary care interactions. By using
+  GP records it can be seen that registered carer rates have been generally 
+  increasing between 2016 and 2021, with particularly sharp increases in 2020, 
+  likely due to the COVID pandemic. However, proportionally it can be seen that 
+  registration rates are unequal across different demographic groups. The most
+  significant shortfalls were: men were around 40-50% less likely than women to 
+  register as carers; younger people (18-39) 10-20 times less likely than 
+  retirement-age people (70+); non-english speaks 10-40% less likely 
+  than English speaks; and Chinese and Black/Black British people significantly less likely
+  than White British people to register. Conversely, we have found that Indian 
+  and Pakistani patients are more likely than White British patients to register
+  as carers. While some of these factors are well 
+  correllated (for example with Chinese patients being significantly younger 
+  than White British patients - clustered around University ages - and hence 
+  lower registration rates could be expected), some ratios go against these
+  correlations, such as Indian and Pakistani patients who are generally younger
+  than White British patients, but feature higher rates of registration. Further
+  investigation is required to find out whether this is due to higher need (i.e.
+  higher levels of unregistered carers) or better GP interactions due to 
+  interventions, or a combination of both.
+  <br><br>
+  Looking at carer registrations broken down by month, in most ages we can 
+  clearly see spikes - before COVID these generally occured in the Autumn when
+  flu vaccinations were occuring, and hence either GPs were more likely to
+  record people as carers, or carers were more likely to contact their GPs.
+  During the COVID pandemic this shifted and was split by age: retirement-age
+  patients had a large increase in registrations at the beginning of the 
+  pandemic when work was undertaken to identify critically extremely vulnerable
+  patients (and hence their carers), while working-age patients had increased 
+  registrations at the onset of the vaccination drive, allowing them access to
+  earlier vaccinations than would be otherwise allowed purely based upon their
+  ages and known health conditions. On average, pre-COVID registration rates 
+  increased by 1.5-2 times during vaccine drives, and during COVID these 
+  increased further to 2-5.5 times.
+  <br><br>
+  However, while vaccine drives (and the shielding identification drive) have 
+  been very correlated with increased numbers of carer registrations, we find
+  that these registrations occur more often from areas of lower deprivation and
+  less often from areas of higher deprivation. Pre-COVID the effect was 
+  statistically significant, although small, for the full population deprivation
+  shift, and was significant when looking at only female registrations and 
+  younger carer registrations (<40) - although no significant effect was seen
+  in male registrations or older carer registrations. During the pandemic this
+  effect increased, with both greater changes in the average deprivation score
+  and more groups featuring statistically significant shifts.
+  <br><br>
+  These effects can be taken two ways - they show a clear and consistent trend
+  that, during periods of increased call for carer registration, the numbers
+  of carers registered increase greatly, suggesting that on the whole these 
+  drives are very successful in their aim. However, the pattern found for 
+  female and younger carers pre-COVID, and all carers during the pandemic, 
+  suggests that these drives are greatly more effective in areas of lower 
+  deprivation, where interactions with GP practices may be more routine. Future
+  commissioning should look into specific cases to see whether more 
+  communications or engagement could benefit these drives, if targetted to areas
+  of lower deprivation.
+  <br><br>
+  Finally, we considered the health needs of our registered carers. From the 
+  literature and through discussion with carers in our Task and Finish group,
+  we know that carers tend to have poorer health outcomes than similar 
+  non-carers, and we learned of specific cases where carers put off their own
+  health needs for that of the person they care for, worsening their health 
+  outcomes over time and in some cases resulting in longer spells in hospital
+  than would have been required if they were able to act sooner.
+  <br><br>
+  We approached this in two methods - firstly, we looked at registered carer
+  risk scores using the Cambridge Multimorbidity Score, and compared these to 
+  similar non-registered carers, splitting by sex and age-band. On comparison,
+  we found that registered carers are more similar with non-registerd carers 
+  10-15 years older than themselves. However, presently it is unknown whether
+  these patients' caring responsibilities has reduced their health outcomes 
+  (i.e. has caring aged them), or whether we only know about these carer because
+  of their already increased health needs, which has put them in more contact
+  with GPs and hence increased their chances of being recorded as a carer.
+  <br><br>
+  To investigate further, we next looked at hospital usage by registered carers 
+  and similar non-registered carers, comparing elective inpatient spells to 
+  A&E attendances. In theory, based upon carer stories, if carers tend to put
+  off medical procedures until they progress to a point where they can't be 
+  ignored, we would expect to see lower (or similar) rates of elective 
+  attendance but increased rates of emergency attendance. When splitting by 
+  sex and age-band, this is what we find: registered carers have broadly 
+  similar rates of elective attendance at hospital, but significantly higher
+  rates of attendance at A&E in most age-bands. While it is interesting that
+  these registered carers have similar rates of elective admission to hospital,
+  based upon their CMS scores we could have expected to find greater rates of
+  admission - suggesting that the carer anecdotes of cancelling appointments
+  due to any recovery time hold true for the full Leeds population.
+  <br><br>
+  Again, we are limited by the fact that we can only compare rates of carers 
+  <i>who have registered</i> to all other patients, and so future work will 
+  look into grouping patients into households by using a pseudo-household ID
+  from TPP/SystmOne, and identifying 'probable carers' based upon the 
+  health-needs of the property. An example would be a four person household, 
+  with two adults and two children, where one adult has an SMI indicator, or
+  an indicator for severely reduced mobility. Once a cohort of these patients
+  has been found, the above methods will be used to compare both the CMS scores
+  of 'probable carers' to registered carers, and compare the elective 
+  admission/A&E attendance rates of the two groups. This will help identify 
+  where interventions would be best placed; if 'probable' carer demographics
+  and history with GP practices broadly match those of registered carers then
+  future commissioning should look into working more closely with GPs to 
+  help increase rates of carer registration. If the two groups are found to 
+  differ significantly in either demographics of healthcare-interactions, then
+  more targetted interventions aimed at a community level should be 
+  investigated.
+  </p>"
+)
 
 ### ALL PLOT OBJECTS
 

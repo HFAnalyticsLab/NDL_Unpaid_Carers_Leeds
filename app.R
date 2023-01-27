@@ -283,7 +283,23 @@ ui <- fluidPage(
       scrolly_section(id = 'd_buffer', br()),
       HTML('</center>')
     )
-  )
+  ),
+  
+  br(),
+  hr(),
+  hr(),
+  
+  fluidRow(
+    column(1),
+    column(
+      10,
+      br(),
+      concludingtext,
+      br(),
+      hr()
+    ),
+    column(1)
+  ),
 )
 
 # server

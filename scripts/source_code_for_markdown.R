@@ -338,10 +338,9 @@ intro_text <- HTML(
     aid for both carers and cared-for people.</li>
   </ul>
   <br>
-  As well as this, we also had access to <b>Secondary Care records</b> 
-  (inpatient, outpatient, A&E) and <b>Mental Health appointments</b>. All of the
-  above data sets were linkable at a person-level to some extent via 
-  pseudonymised patient identifiers.
+  As well as this, we also had access to <b>Secondary Care records</b>, including
+  inpatient appointments (elective/non-elective), and emergency attendances at
+  A&E.
   <br>
   <br>
   An interactive version of this report can be found
@@ -350,9 +349,7 @@ intro_text <- HTML(
 )
 
 section1_text <- HTML(
-  "<span style='font-size:20px'>
-    So what demographic variation do we have in our GP carers data?
-  </span>
+  "<H2>What demographic variation do we have in our GP carers data?</H2>
   <br>
   <br> 
   <p>In the 2011 census around 11.2% of people (age-standardised) recorded that
@@ -413,8 +410,6 @@ section1_conclusion <- HTML(
   areas of the city. 
   </p>")
 
-text0 <- HTML("")
-
 text1 <- HTML("In every year, the population proportion of carers
               falls well short of the expected figure from the census results.
               Prior to 2020 we can see a slight increase in the proportion of 
@@ -422,7 +417,7 @@ text1 <- HTML("In every year, the population proportion of carers
               2016 to 1.70% in 2019. We see a large increase in 2020
               (up to 2.2% of the population), before dropping to around
               1.45% in 2021.
-              <br>
+              <br><br>
               Splitting by patient sex, in all years we see significantly more 
               female carers than male carers, with roughly double the proportion
               of the female population registering as carers than the male 
@@ -446,7 +441,7 @@ text4 <- HTML("<p> Interestingly, there is no consistent strong trend
               in the most deprived areas in Leeds are roughly as likely to tell 
               their GP that they are a carer as those who live in the least 
               deprived areas.
-              <br>
+              <br><br>
               Based upon the health-needs of the city, it is
               known that people who live in the most deprived areas generally
               feature poorer health outcomes (higher levels of chronic illness,
@@ -473,7 +468,7 @@ text5 <- HTML("<p>Overall in Leeds around 85% of patients have had their
               2016 to 73% in 2021. However, the proportion of carers who speak
               English as their first language is significantly higher at all 
               times: at 87% in 2016 and 85% in 2021.
-              <br>
+              <br><br>
               Similarly, the proportion of non-English first language patients
               is significantly lower amongst the carer cohort than the non-carer
               cohort (5% vs 7% in 2016), and the carer cohort experiences little
@@ -488,7 +483,7 @@ text7 <- HTML("It is likely that a significant portion of the apparent
               registrations come from the older age groups, so we need to 
               account for patient age when computing rates of non-English 
               speaking groups.
-              <br>
+              <br><br>
               When we split by age-band this assumption is partially confirmed -
               at the higher age-bands we see roughly matching proportions of 
               non-English speaking patients for both carers and non-carers. 
@@ -586,8 +581,9 @@ text9 <- HTML(paste0("<H2> Carer Registrations </H2>
               levels, signifying that during our signal periods people from 
               less deprived areas were more likely to register as carers at 
               their GP practices than those from more deprived areas. This shift
-              was significant for female patient registrations, and for younger
-              age bands.
+              was also significant for female patient registrations, and for younger
+              age bands, although not for male patients or older age-bands.
+              Significance was gauged via Mann-Whitney U tests.
               </p>"))
 
 
@@ -626,7 +622,6 @@ text17 <- HTML("<H3> COVID </H3>
               .0001), and when split by sex (M: p < .0001; F: p , .0001) and 
               age-band (20-50: p < .0001; 60-80: p < .01; 90: p = 0.2).
               </p>")
-
 
 
 text29 <- HTML("
@@ -675,9 +670,7 @@ text29 <- HTML("
               </p>")
 
 nel_text <- HTML(
-  "<span style='font-size:20px'>
-    How does the health of registered carers compare with non-carers?
-  </span>
+  "<H2>How does the health of registered carers compare with non-carers?</H2>
   <br>
   <br> 
   <p>
@@ -727,9 +720,7 @@ nel_text <- HTML(
   </p>")
 
 concludingtext <- HTML(
-  "<span style='font-size:20px'>
-    Discussion and Conclusion
-  </span>
+  "<H2>Discussion and Conclusion</H2>
   <br>
   <br> 
   <p>
@@ -755,11 +746,93 @@ concludingtext <- HTML(
   higher levels of unregistered carers) or better GP interactions due to 
   interventions, or a combination of both.
   <br><br>
-  Looking across 
+  Looking at carer registrations broken down by month, in most ages we can 
+  clearly see spikes - before COVID these generally occured in the Autumn when
+  flu vaccinations were occuring, and hence either GPs were more likely to
+  record people as carers, or carers were more likely to contact their GPs.
+  During the COVID pandemic this shifted and was split by age: retirement-age
+  patients had a large increase in registrations at the beginning of the 
+  pandemic when work was undertaken to identify critically extremely vulnerable
+  patients (and hence their carers), while working-age patients had increased 
+  registrations at the onset of the vaccination drive, allowing them access to
+  earlier vaccinations than would be otherwise allowed purely based upon their
+  ages and known health conditions. On average, pre-COVID registration rates 
+  increased by 1.5-2 times during vaccine drives, and during COVID these 
+  increased further to 2-5.5 times.
+  <br><br>
+  However, while vaccine drives (and the shielding identification drive) have 
+  been very correlated with increased numbers of carer registrations, we find
+  that these registrations occur more often from areas of lower deprivation and
+  less often from areas of higher deprivation. Pre-COVID the effect was 
+  statistically significant, although small, for the full population deprivation
+  shift, and was significant when looking at only female registrations and 
+  younger carer registrations (<40) - although no significant effect was seen
+  in male registrations or older carer registrations. During the pandemic this
+  effect increased, with both greater changes in the average deprivation score
+  and more groups featuring statistically significant shifts.
+  <br><br>
+  These effects can be taken two ways - they show a clear and consistent trend
+  that, during periods of increased call for carer registration, the numbers
+  of carers registered increase greatly, suggesting that on the whole these 
+  drives are very successful in their aim. However, the pattern found for 
+  female and younger carers pre-COVID, and all carers during the pandemic, 
+  suggests that these drives are greatly more effective in areas of lower 
+  deprivation, where interactions with GP practices may be more routine. Future
+  commissioning should look into specific cases to see whether more 
+  communications or engagement could benefit these drives, if targetted to areas
+  of lower deprivation.
+  <br><br>
+  Finally, we considered the health needs of our registered carers. From the 
+  literature and through discussion with carers in our Task and Finish group,
+  we know that carers tend to have poorer health outcomes than similar 
+  non-carers, and we learned of specific cases where carers put off their own
+  health needs for that of the person they care for, worsening their health 
+  outcomes over time and in some cases resulting in longer spells in hospital
+  than would have been required if they were able to act sooner.
+  <br><br>
+  We approached this in two methods - firstly, we looked at registered carer
+  risk scores using the Cambridge Multimorbidity Score, and compared these to 
+  similar non-registered carers, splitting by sex and age-band. On comparison,
+  we found that registered carers are more similar with non-registerd carers 
+  10-15 years older than themselves. However, presently it is unknown whether
+  these patients' caring responsibilities has reduced their health outcomes 
+  (i.e. has caring aged them), or whether we only know about these carer because
+  of their already increased health needs, which has put them in more contact
+  with GPs and hence increased their chances of being recorded as a carer.
+  <br><br>
+  To investigate further, we next looked at hospital usage by registered carers 
+  and similar non-registered carers, comparing elective inpatient spells to 
+  A&E attendances. In theory, based upon carer stories, if carers tend to put
+  off medical procedures until they progress to a point where they can't be 
+  ignored, we would expect to see lower (or similar) rates of elective 
+  attendance but increased rates of emergency attendance. When splitting by 
+  sex and age-band, this is what we find: registered carers have broadly 
+  similar rates of elective attendance at hospital, but significantly higher
+  rates of attendance at A&E in most age-bands. While it is interesting that
+  these registered carers have similar rates of elective admission to hospital,
+  based upon their CMS scores we could have expected to find greater rates of
+  admission - suggesting that the carer anecdotes of cancelling appointments
+  due to any recovery time hold true for the full Leeds population.
+  <br><br>
+  Again, we are limited by the fact that we can only compare rates of carers 
+  <i>who have registered</i> to all other patients, and so future work will 
+  look into grouping patients into households by using a pseudo-household ID
+  from TPP/SystmOne, and identifying 'probable carers' based upon the 
+  health-needs of the property. An example would be a four person household, 
+  with two adults and two children, where one adult has an SMI indicator, or
+  an indicator for severely reduced mobility. Once a cohort of these patients
+  has been found, the above methods will be used to compare both the CMS scores
+  of 'probable carers' to registered carers, and compare the elective 
+  admission/A&E attendance rates of the two groups. This will help identify 
+  where interventions would be best placed; if 'probable' carer demographics
+  and history with GP practices broadly match those of registered carers then
+  future commissioning should look into working more closely with GPs to 
+  help increase rates of carer registration. If the two groups are found to 
+  differ significantly in either demographics of healthcare-interactions, then
+  more targetted interventions aimed at a community level should be 
+  investigated.
   </p>"
 )
-
-technicalnotes <- HTML("")
 
 ### ALL PLOT OBJECTS
 
@@ -823,7 +896,7 @@ introPlot <- ggplotly(introggPlot, tooltip = 'text') %>%
 ## Carer deprivation score density
 deprivation_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   group_by(signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
   group_by(deprivation_decile) %>%
