@@ -31,7 +31,9 @@ ui <- fluidPage(
     HTML(
       "<center>
         <h1>Unpaid Carers in Leeds</h1>
-        <p style='font-size:26px'> by Ben Alcock </p>
+        <p style='font-size:26px'> by the Leeds Networked Data Lab team
+        <br>
+        part of NHS West Yorkshire ICB</p>
       </center>"
     )
   ),
@@ -109,10 +111,10 @@ ui <- fluidPage(
     column(1),
     column(
       10,
+      hr(),
       br(),
       section1_text,
-      br(),
-      hr()
+      br()
     ),
     column(1)
   ),
@@ -128,7 +130,7 @@ ui <- fluidPage(
       HTML('<center>'),
       actionButton("by_year", "Plot by Year"),
       actionButton("by_group", "Plot by Group"),
-      plotlyOutput('demographicsPlot', height = '400px'),
+      plotlyOutput('demographicsPlot', height = '600px'),
       HTML('</center>')
     ),
     scrolly_sections(
@@ -138,13 +140,50 @@ ui <- fluidPage(
       scrolly_section(id = 'age_band', render_text(3)),
       scrolly_section(id = 'imd', render_text(4)),
       # scrolly_section(id = 'age_band_imd', render_text(1)),
-      scrolly_section(id = 'language', render_text(5)),
-      scrolly_section(id = 'assumed', render_text(6)),
+      # scrolly_section(id = 'language', render_text(5)),
+      # scrolly_section(id = 'assumed', render_text(6)),
+      # scrolly_section(id = 'language_age', render_text(7)),
+      # scrolly_section(id = 'odds_ratio', render_text(8)),
       scrolly_section(id = 'd_buffer', br()),
       HTML('</center>')
     )
   ),
+  
+  # scrollytelling plot
+  scrolly_container(
+    "demographics2",
+    scrolly_graph(
+      br(),
+      br(),
+      textOutput('section20'),
+      br(),
+      HTML('<center>'),
+      plotlyOutput('demographicsPlot2', height = '600px'),
+      HTML('</center>')
+    ),
+    scrolly_sections(
+      HTML('<center>'),
+      scrolly_section(id = 'language', render_text(5)),
+      scrolly_section(id = 'assumed', render_text(6)),
+      scrolly_section(id = 'language_age', render_text(7)),
+      scrolly_section(id = 'odds_ratio', render_text(8)),
+      # scrolly_section(id = 'd_buffer', br()),
+      HTML('</center>')
+    )
+  ),
 
+  fluidRow(
+    column(1),
+    column(
+      10,
+      br(),
+      section1_conclusion,
+      br(),
+      hr()
+    ),
+    column(1)
+  ),
+  
   br(),
 
   # scrollytelling plot
@@ -161,21 +200,20 @@ ui <- fluidPage(
     ),
     scrolly_sections(
       HTML('<center>'),
-      scrolly_section(id = 0, render_text(7)),
-      scrolly_section(id = 1, render_text(8)),
-      scrolly_section(id = 2, render_text(9)),
-      scrolly_section(id = 3, render_text(10)),
-      scrolly_section(id = 4, render_text(11)),
-      scrolly_section(id = 5, render_text(12)),
+      scrolly_section(id = 0, render_text(9)),
+      scrolly_section(id = 1, render_text(10)),
+      scrolly_section(id = 2, render_text(11)),
+      scrolly_section(id = 3, render_text(12)),
+      scrolly_section(id = 4, render_text(13)),
+      scrolly_section(id = 5, render_text(14)),
       # add a scrolly_section with nothing in it;
       # this buffer prevents the plot from disappearing while reading last section
-      scrolly_section(id = "buffer", render_text(13)),
-      scrolly_section(id = "d_total", render_text(14)),
-      scrolly_section(id = "d_sex", render_text(15)),
-      scrolly_section(id = "d_age_band", render_text(16)),
-      scrolly_section(id = "d_buffer", br()),
-      HTML('</center>'),
-      width = '20%'
+      scrolly_section(id = "buffer", render_text(15)),
+      scrolly_section(id = "d_total", render_text(16)),
+      scrolly_section(id = "d_sex", render_text(17)),
+      scrolly_section(id = "d_age_band", render_text(18)),
+      scrolly_section(id = "d_age_band", render_text(31)),
+      HTML('</center>')
     )
   ),
   
@@ -196,11 +234,10 @@ ui <- fluidPage(
     ),
     scrolly_sections(
       HTML('<center>'),
-      scrolly_section(id = 6, render_text(17)),
-      scrolly_section(id = "d_covid", render_text(18)),
+      scrolly_section(id = 6, render_text(19)),
+      scrolly_section(id = "d_covid", render_text(20)),
       scrolly_section(id = 'd_buffer', br()),
-      HTML('</center>'),
-      width = '20%'
+      HTML('</center>')
     )
   ),
 
@@ -210,10 +247,10 @@ ui <- fluidPage(
     column(1),
     column(
       10,
+      hr(),
       br(),
       nel_text,
-      br(),
-      hr()
+      br()
     ),
     column(1)
   ),
@@ -232,20 +269,37 @@ ui <- fluidPage(
     ),
     scrolly_sections(
       HTML('<center>'),
-      scrolly_section(id = 0, render_text(19)),
-      scrolly_section(id = 5, render_text(20)),
-      scrolly_section(id = 10, render_text(21)),
-      scrolly_section(id = 15, render_text(22)),
-      scrolly_section(id = 20, render_text(23)),
-      scrolly_section(id = 25, render_text(24)),
+      scrolly_section(id = 0, render_text(21)),
+      scrolly_section(id = 5, render_text(22)),
+      scrolly_section(id = 10, render_text(23)),
+      scrolly_section(id = 15, render_text(24)),
+      scrolly_section(id = 20, render_text(25)),
+      scrolly_section(id = 25, render_text(26)),
       # scrolly_section(id = 30, render_text(25)),
-      scrolly_section(id = 'original', render_text(25)),
-      scrolly_section(id = 'optimal', render_text(26)),
+      scrolly_section(id = 'original', render_text(27)),
+      scrolly_section(id = 'optimal', render_text(28)),
+      scrolly_section(id = 'inpatient', render_text(29)),
+      scrolly_section(id = 'ae', render_text(30)),
       scrolly_section(id = 'd_buffer', br()),
-      HTML('</center>'),
-      width = '20%'
+      HTML('</center>')
     )
-  )
+  ),
+  
+  br(),
+  hr(),
+  hr(),
+  
+  fluidRow(
+    column(1),
+    column(
+      10,
+      br(),
+      concludingtext,
+      br(),
+      hr()
+    ),
+    column(1)
+  ),
 )
 
 # server
@@ -364,7 +418,6 @@ server <- function(input, output, session) {
       if (add == 'd_age_band') return(deprivationAgeBandPlot)
       
       if (add == 'd_covid') {
-        browser()
         if (deprivationPlotGroup$data == 'total') return(deprivationTotalPlotCovid)
         if (deprivationPlotGroup$data == 'total') return(deprivationPlotcovid)
         if (deprivationPlotGroup$data == 'total') return(deprivationAgeBandPlotCovid)
@@ -489,10 +542,11 @@ server <- function(input, output, session) {
           ylim(0, NA) +
           facet_wrap(~ age_band) +
           ylab('Population [%]')
+    # } else if (group_id == 'language_age') {
+    #   demographPlot <- language_age_band
+    # } else if (group_id == 'odds_ratio') {
+    #   demographPlot <- oddsPlot
     } else {
-      # hide('by_year')
-      # hide('by_group')
-      
       demographPlot <- carer_language %>%
         filter(
           !language %in% unlist(
@@ -546,6 +600,78 @@ server <- function(input, output, session) {
       )
   })
   
+  output$demographicsPlot2 <- renderPlotly({
+    group_id <- input$demographics2
+    
+    if (is.null(group_id)) group_id <- 'language'
+    
+    if (group_id != 'd_buffer') {
+      if (group_id == 'language_age') {
+        demographPlot <- language_age_band
+      } else if (group_id == 'odds_ratio') {
+        demographPlot <- oddsPlot
+      } else {
+        demographPlot <- carer_language %>%
+          filter(
+            !language %in% unlist(
+              ifelse(
+                group_id == 'language', 
+                'assumed_english',
+                list(c('english', 'unknown'))
+              )
+            )
+          ) %>%
+          mutate(
+            language = str_to_title(str_replace_all(language, '_', ' ')),
+            carer = if_else(carer, 'Carer', 'Non-Carer')
+          ) %>%
+          group_by(date, carer) %>%
+          mutate(
+            text = ifelse(
+              group_id == 'language',
+              paste0(
+                'Month: ', date,
+                '\nEnglish: ', round(percentage[language == 'English'], 2), '%',
+                '\nNon-English: ', round(percentage[language == 'Non English'], 2), '%',
+                '\nUnknown: ', round(percentage[language == 'Unknown'], 2), '%'
+              ),
+              paste0(
+                'Month: ', date,
+                '\nAssumed English: ', round(percentage[language == 'Assumed English'], 2), '%',
+                '\nNon-English: ', round(percentage[language == 'Non English'], 2), '%'
+              )
+            )
+          ) %>%
+          ggplot(aes(text = text)) +
+          geom_bar(aes(date, percentage, fill = language), stat = 'identity') +
+          facet_wrap(~ carer) +
+          ylab('Registered Population [%]') +
+          xlab('')
+      }
+      
+      plotly_obj <- ggplotly(demographPlot, tooltip = 'text') %>%
+        layout(
+          title = list(element_blank()),
+          legend = list(orientation = 'h', xanchor = 'center', x = 0.5, y = -0.2),
+          font = list(family = 'Lato'),
+          margin = list(t = 50),
+          hoverlabel = list(bgcolor = 'whitesmoke', color = 'darkGray')
+        ) %>%
+        config(
+          displaylogo = F,
+          showSendToCloud = F,
+          displayModeBar = F
+        )
+      
+      if (group_id == 'odds_ratio') plotly_obj <- plotly_obj %>%
+        neaten_plotly_labels(limit_type = 'logical')
+    } else {
+      plotly_obj <- ''
+    }
+    
+    return(plotly_obj)
+  })
+  
   output$nelPlot <- renderPlotly({
     offset <- input$nelPlots
 
@@ -563,10 +689,13 @@ server <- function(input, output, session) {
           y = 0.005
         ) +
         geom_density(aes(nel), data = nel_reference, kernel = 'rectangular', size = 0.5)
-    } else {
+    } else if (offset %in% c('original', 'optimal')) {
       nelPlot <- comp_plot[[2 - (offset == 'original')]] +
         scale_fill_discrete(name = 'Carer') +
         xlab('Cambridge Emergency Admission Score')
+    } else {
+      if (offset == 'inpatient') nelPlot <- ip_plot
+      if (offset %in% c('ae', 'd_buffer')) nelPlot <- ae_plot
     }
     
     ggplotly(nelPlot) %>%
@@ -634,7 +763,7 @@ server <- function(input, output, session) {
           axis.title = element_text(size = rel(1.5))
         )
     } else {
-      filtered_period <- carer_period %>% filter(ceiling(year) <= years)
+      filtered_period <- carer_period %>% filter(year <= years + 0.5)
       
       period_plot <- carer_period %>%
         ggplot(aes(x = p, y = year)) + 
@@ -680,6 +809,9 @@ server <- function(input, output, session) {
   })
   
   output$demographics <- renderScrollytell({
+    scrollytell()
+  })
+  output$demographics2 <- renderScrollytell({
     scrollytell()
   })
   output$timeSeries <- renderScrollytell({

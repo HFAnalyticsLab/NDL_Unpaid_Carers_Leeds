@@ -11,15 +11,15 @@ library(shinyjs)
 library(ggvis)
 library(plotly)
 library(metathis)
-library(formattable)
+# library(formattable)
 library(lubridate)
-# devtools::install_github("statistiekcbs/scrollytell")
+if (!'scrollytell' %in% installed.packages()) devtools::install_github("statistiekcbs/scrollytell")
 library(scrollytell)
-library(here)
 library(shinycssloaders)
-library(leaflet)
-library(sf)
-library(geographr)
+library(here)
+# library(leaflet)
+# library(sf)
+# library(geographr)
 
 options(scipen = 999)
 options(warn = -1)
@@ -99,6 +99,8 @@ carer_language <- readRDS(here('data/carerLanguage.rds'))
 
 carer_period <- readRDS(here('data/carerPeriod.rds'))
 
+load(here('data/languageAgeBandPlots.RData'))
+
 ### FUNCTIONS & TEXT
 
 stop_propogation <- FALSE
@@ -148,13 +150,18 @@ text <- function(num){
            text22,
            text23,
            text24,
+           text25,
            text26,
-           text27
+           text27,
+           text28,
+           text29,
+           text30,
+           text31
     )
   )
 }
 
-neaten_plotly_labels <- function(plotly_obj) {
+neaten_plotly_labels <- function(plotly_obj, limit_type = NULL) {
   df <- data.frame(
     id = seq_along(plotly_obj$x$data), 
     legend_entries = unlist(lapply(plotly_obj$x$data, `[[`, "name"))
@@ -162,11 +169,20 @@ neaten_plotly_labels <- function(plotly_obj) {
   df$legend_group <- gsub("^\\((.*?),\\d+\\)", "\\1", df$legend_entries)
   df$is_first <- !duplicated(df$legend_group)
   
+  l <- F
+  if (!is.null(limit_type)) {
+    as_limit_type <- get(paste0('as.', limit_type))
+    l <- T
+  }
+  
   for (i in df$id) {
     is_first <- df$is_first[[i]]
     plotly_obj$x$data[[i]]$name <- df$legend_group[[i]]
     plotly_obj$x$data[[i]]$legendgroup <- plotly_obj$x$data[[i]]$name
     if (!is_first) plotly_obj$x$data[[i]]$showlegend <- FALSE
+    if (l) {
+      if (is.na(as_limit_type(df$legend_group[[i]]))) plotly_obj$x$data[[i]]$showlegend <- FALSE
+    }
   }
   
   plotly_obj
@@ -219,10 +235,9 @@ intro_text <- HTML(
     aid for both carers and cared-for people.</li>
   </ul>
   <br>
-  As well as this, we also had access to <b>Secondary Care records</b> 
-  (inpatient, outpatient, A&E) and <b>Mental Health appointments</b>. All of the
-  above data sets were linkable at a person-level to some extent via 
-  pseudonymised patient identifiers.
+  As well as this, we also had access to <b>Secondary Care records</b>, including
+  inpatient appointments (elective/non-elective), and emergency attendances at
+  A&E.
   </p>"
 )
 
@@ -253,6 +268,38 @@ section1_text <- HTML(
   In the figures below, please click on the legend items below the y-axis to 
   filter out the option. To highlight one legend option, please double-click the
   item.
+  </p>")
+
+section1_conclusion <- HTML(
+  "<p>
+  Overall, by comparing the demographics of our (Leeds resident) patients to 
+  ONS estimates we can see that there are clear variations in carer 
+  registrations across different demographic groups. Registered carers are more
+  likely to be women than men, and are more likely to be older - with 
+  significant weighting towards retirement ages. While there is some variation
+  over time, with the gaps closing slightly, by the end of 2021 these were still
+  present. Interestingly, while there are some differences by deprivation, these
+  were smaller than assumed, and may have been more due to age differences (with
+  younger residents tending to be both less likely to register as a carer, and 
+  more likely to live in a more deprived areas).
+  <br>
+  <br>
+  To compare ethnicity and language differences we relied purely upon GP data
+  due to the lack of yearly ONS estimate data. We saw that patients who don't 
+  speak English as a second language were much less likely to register as carers
+  than those who speak English as a first language - and when accounting for 
+  language differences across age-bands this finding holds at the younger ages.
+  When comparing different ethnic groups across Leeds we found that African 
+  (and Black British) and Chinese (and Chinese British) patients were 
+  <i>less</i> likely to register as carers, while Indian/British Indian and 
+  Pakistani/British Pakistani patients were <i>more</i> likely to register as 
+  carers. Interestingly, all ethnic groups tended to be on-average younger
+  than White British patients (especially Chinese patients, who tended to be 
+  primarily University-age), which may explain and under-representation, but
+  would not explain why there were significantly more Indian/Pakistani patients
+  registered as carers. Further investigation could look into this to find if 
+  there were specific successes in campaigns that could be applied to other 
+  areas of the city. 
   </p>")
 
 text0 <- HTML("")
@@ -340,7 +387,66 @@ text6 <- HTML("<H2> Population Proportion by Main Language (Excluding Unknowns)
               language.
               </p>")
 
-text7 <- HTML("<H2> Pre-COVID Carer Registrations </H2>
+text7 <- HTML("<H2> Population Proportion by Main Language (Age Banded)
+              </H2>
+              <br>
+              It is likely that a significant portion of the apparent
+              under-representation of non-English carer registrations arises as 
+              a result of the difference in average age of non-English speakers,
+              as across Leeds the older the group, the more likely the person is
+              to be a primary English speaker. We know that most carer 
+              registrations come from the older age groups, so we need to 
+              account for patient age when computing rates of non-English 
+              speaking groups.
+              <br>
+              <br>
+              When we split by age-band this assumption is partially confirmed -
+              at the higher age-bands we see roughly matching proportions of 
+              non-English speaking patients for both carers and non-carers. 
+              However, while the younger age-bands broadly matched 
+              carer/non-carer proportions in 2016 we can see a divergance over 
+              time, with proportionally fewer non-English speaking patients 
+              registering as carers over time. At its greatest extend, we can
+              see a large difference for 20-40 year olds across Leeds, with 
+              far fewer non-English speaking carers than would be expected when
+              accounting for age differences.
+              </p>")
+
+text8 <- HTML("<H2> Odds Ratios </H2>
+              <br>
+              To estimate the effect of each demographic variable on carer 
+              registration rates, we ran a binomial GLM, predicting whether
+              a patient would register as a carer based upon their age band, 
+              sex, main language (assuming unknowns were English-speaking), 
+              residential deprivation decile, and ethnicity group. From this 
+              model, odds ratios were calculated. Note that these were based 
+              upon GP data, so outcomes will have slight deviances when compared
+              with ONS population estimate data.
+              <br>
+              <br>
+              Of note, we can see that age is a consistantly signicant indicator
+              of carer registration, with each year increasing a patient's odds
+              of registering by around 3-4%. Similarly, we can see that as we 
+              already found, men tended to have 40-50% reduced odds of 
+              registering compared with women, although this has been slightly 
+              decreasing since 2016. Deprivation has a significant, although 
+              relatively smaller, effect, with each deprivation decile featuring
+              around a 5% decrease in odds of registration, and as we have seen
+              language in 2016 had little effect, although by 2021 this has 
+              grown to around a 30-40% decrease in registration odds for 
+              non-English first language patients. Finally looking at patient
+              ethnicity registration rates (compared to 'White British' rates),
+              we can see that, despite having generally younger 
+              age-distributions, Indian and Pakistanti patients are around 5-20%
+              more likely to register as carers than White British patients, 
+              while Chinese and African patients are significantly less likely
+              (50% and 40% respectively). In all significant cases, we can see
+              an upwards trend - with odds of registering compared with White 
+              British patients generally increasing over time, although the 
+              specific rate of increase varies greately across different groups.
+              </p>")
+
+text9 <- HTML("<H2> Pre-COVID Carer Registrations </H2>
               <br>
               Next, we were interested in looking at seasonal variations in 
               carer registrations for four 'pre-COVID' years (2016-2019), and
@@ -351,7 +457,7 @@ text7 <- HTML("<H2> Pre-COVID Carer Registrations </H2>
               (70+).
               </p>")
 
-text8 <- HTML("<H2> Pre-COVID Carer Registrations - 2016 </H2>
+text10 <- HTML("<H2> Pre-COVID Carer Registrations - 2016 </H2>
               <br>
               Splitting registrations by 10 year age-band, in 2016 we can see 
               that at the younger ages (<=40) there was an initial peak of 
@@ -359,34 +465,34 @@ text8 <- HTML("<H2> Pre-COVID Carer Registrations - 2016 </H2>
               (>=40) the peak came later in the year.
               </p>")
 
-text9 <- HTML("<H2> Pre-COVID Carer Registrations - 2017 </H2>
+text11 <- HTML("<H2> Pre-COVID Carer Registrations - 2017 </H2>
               <br>
               Looking forward to 2017, we see the peak around October/November
               appears in all age-bands above 20, while the 20s age-band features
               mostly noise.
               </p>")
 
-text10 <- HTML("<H2> Pre-COVID Carer Registrations - 2018 </H2>
+text12 <- HTML("<H2> Pre-COVID Carer Registrations - 2018 </H2>
               <br>
               In 2018 we can see a definite peak in all age-bands at 
               October/November, with the older ages (50+) exhibiting a much 
               greater spike than in previous years.
               </p>")
 
-text11 <- HTML("<H2> Pre-COVID Carer Registrations - 2019 </H2>
+text13 <- HTML("<H2> Pre-COVID Carer Registrations - 2019 </H2>
               <br>
               And again, the same trend in 2019, with higher numbers of carer
               registration in 'peak' times.
               </p>")
 
-text12 <- HTML("<H2> Pre-COVID Carer Registrations - Autumn Wave </H2>
+text14 <- HTML("<H2> Pre-COVID Carer Registrations - Autumn Wave </H2>
               <br>
               Highlighting September-November each year we can clearly see waves
               of carer registrations in all age-bands except the 20-year old 
               band.
               </p>")
 
-text13 <- HTML("<H2> Pre-COVID Carer Registrations - Autumn Wave </H2>
+text15 <- HTML("<H2> Pre-COVID Carer Registrations - Autumn Wave </H2>
               <br>
               These periods correspond well with usual vaccine drives for flu 
               vaccines, which would usually not be available freely for 
@@ -414,7 +520,7 @@ text13 <- HTML("<H2> Pre-COVID Carer Registrations - Autumn Wave </H2>
               carers lived.
               </p>")
 
-text14 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation </H2>
+text16 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation </H2>
               <br>
               Looking at the whole population, we took the combined IMD score 
               for each area and looked at the change in deprivation level for 
@@ -422,31 +528,33 @@ text14 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation </H2>
               who registered outside these times. Here, a shift to higher scores
               means that a greater number of patients from more deprived areas
               register as carers during the signal periods, and a shift to lower
-              scores means the inverse.
+              scores means the inverse. Statistical significance was gauged via
+              Mann-Whitney U tests.
               <br>
               <br>
-              We observed a statistically significant shift to lower deprivation
+              We observed a small but statistically significant shift to lower deprivation
               levels, signifying that during our signal periods people from 
               less deprived areas were more likely to register as carers at 
               their GP practices than those from more deprived areas.
               </p>")
 
-text15 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Sex </H2>
+text17 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Sex </H2>
               <br>
-              This finding was consistent looking at both male and female 
-              patients, although a slightly greater shift was found for male 
-              registrations.
+              When splitting by sex, we find that female patients have a similar
+              statistically significant shift, while male patients have no 
+              statistical significance.
               </p>")
 
-text16 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Age Band
+text18 <- HTML("<H2> Vaccine Drives - Registrations by Deprivation by Age Band
               </H2>
               <br>
-              Similarly, this finding held across all age-bands. The largest 
-              changes in registration level were seen at lower ages, with only 
-              minor shifts in demographics occuring in the 60-69 age band. 
+              Similarly, this finding held across some but not all age-bands,
+              with younger ages (<40) showing statistically significant shifts
+              towards areas of lower deprivation, while older ages (>=40) show
+              no statistical significance.
               </p>")
 
-text17 <- HTML("<H2> COVID Carer Registrations </H2>
+text19 <- HTML("<H2> COVID Carer Registrations </H2>
               <br>
               Moving to 2020 and extending out our analysis to cover all adult
               age-bands, we repeated the above method to compare peak times of
@@ -473,21 +581,23 @@ text17 <- HTML("<H2> COVID Carer Registrations </H2>
               out nationally and in GP practices.
               </p>")
 
-text18 <- HTML("<H2> COVID Carer Registrations - IMD Shift </H2>
+text20 <- HTML("<H2> COVID Carer Registrations - IMD Shift </H2>
               <br>
               Repeating the same methods to compare the deprivation levels of
               areas in which patients who registered during signal times to
               patients who registered in 'usual' times, we can see the same 
-              patterns - during these drives it was more often patients from
+              patterns, although enhanced - during these drives it was more often patients from
               less deprived areas who were identified at GP practices as carers,
               a finding which again holds true over the whole population, and 
-              when split by sex and age-band.
+              when split by sex and age-band. The magnitude of the shift during
+              the pandemic was much greater than pre-pandemic, as well as the
+              range of groups which featured significant shifts.
               <br><br>
               Please click the buttons above the plot to switch between the 
               overall IMD-shift, the shift split by sex, or split by age-band. 
               </p>")
 
-text19 <- HTML("<H2> CMS Score Comparison </H2>
+text21 <- HTML("<H2> CMS Score Comparison </H2>
               <br>
               Looking at the distribution of CMS scores for 60-69 year old 
               carers and non-carers, it is clear that carers have higher risk 
@@ -498,7 +608,7 @@ text19 <- HTML("<H2> CMS Score Comparison </H2>
               non-carers.
               </p>")
 
-text20 <- HTML("<H2> CMS Score Comparison - +5 Years </H2>
+text22 <- HTML("<H2> CMS Score Comparison - +5 Years </H2>
               <br>
               Adding five years to the carer age improves the distribution 
               match slightly, with fewer high-score patients (who have moved up
@@ -506,26 +616,26 @@ text20 <- HTML("<H2> CMS Score Comparison - +5 Years </H2>
               up from the 50-59 age-band).
               </p>")
 
-text21 <- HTML("<H2> CMS Score Comparison - +10 Years </H2>
+text23 <- HTML("<H2> CMS Score Comparison - +10 Years </H2>
               <br>
               Similarly, adding another five years to the carer age again 
               improves the match between the two distributions.
               </p>")
 
-text22 <- HTML("<H2> CMS Score Comparison - +15 Years </H2>
+text24 <- HTML("<H2> CMS Score Comparison - +15 Years </H2>
               <br>
               Now adding another five years seems to make some small
               improvement, although arguably the fit is around as good as it was
               without adding the five years.
               </p>")
 
-text23 <- HTML("<H2> CMS Score Comparison - +20 Years </H2>
+text25 <- HTML("<H2> CMS Score Comparison - +20 Years </H2>
               <br>
               Here, adding five years appears to decrease the match, with too 
               few high-score patients and too many low-score patients.
               </p>")
 
-text24 <- HTML("<H2> CMS Score Comparison - +25 Years </H2>
+text26 <- HTML("<H2> CMS Score Comparison - +25 Years </H2>
               <br>
               It is clear that we have passes the 'optimal' age-shift, as again
               the '60-69' carers are too weighted towards low-risk patients. 
@@ -533,7 +643,7 @@ text24 <- HTML("<H2> CMS Score Comparison - +25 Years </H2>
               ocurred somewhere between a 10-15 year carer age-shift.
               </p>")
 
-text26 <- HTML("<H2> CMS Score Comparison - All Age Bands </H2>
+text27 <- HTML("<H2> CMS Score Comparison - All Age Bands </H2>
               <br>
               Taking this method, we extended it to all age-bands, and 
               calculated an average goodness-of-fit score between the carer and 
@@ -546,7 +656,7 @@ text26 <- HTML("<H2> CMS Score Comparison - All Age Bands </H2>
               need patients and lower numbers of low-need patients).
               </p>")
 
-text27 <- HTML("<H2> CMS Score Comparison - All Age Bands +13 Years </H2>
+text28 <- HTML("<H2> CMS Score Comparison - All Age Bands +13 Years </H2>
               <br>
               Using the goodness-of-fit calculation we found that the optimal
               age-shift of carers was 13 years - that is, when comparing 
@@ -556,6 +666,59 @@ text27 <- HTML("<H2> CMS Score Comparison - All Age Bands +13 Years </H2>
               5 years up to 20 years) and roughly the same optimal age-shift was
               found.
               </p>")
+
+text29 <- HTML("<H2> Hospital Admissions - Elective Inpatient </H2>
+              <br>
+              During our Task and Finish group meetings, many carers brought up
+              anecdotes that they and other carers they know had cancelled 
+              hospital operations because of the recovery time, because they had
+              no way of covering for their caring responsibilities. In the case
+              above (where registered carers have more similar health 
+              characteristics with people 10-15 years older than themselves) 
+              these anecdotes could explain the increased health risk of carers,
+              due to a lack of maintainance of known conditions.
+              <br>
+              <br>
+              In the case of 
+              our T&F group, many experiences were discussed. One carer 
+              had conditions flagged at
+              GP appointments which were not resolved with an elective 
+              operation, despite steady worsening over a number of years, 
+              resulting in a non-elective admission to hospital. Another carer
+              discussed cancelling an operation which would have resolved 
+              chronic pain issues - resulting in no further hospitalisation but
+              decreased quality of life.
+              <br>
+              <br>
+              Within our data set we do not have access to hospital bookings, 
+              and so were unable to directly compare the cancellation rates of 
+              carers and non-carers. However, as a proxy, we have been able to 
+              use SUS to compare population rates of elective inpatient 
+              admission to A&E attendances.
+              <br>
+              <br>
+              Interestingly, when we split the proportion of Leeds-registered 
+              patients who attended an elective inpatient spell (split by sex, 
+              age-band, and carer status), we generally find that registered 
+              carers are approximately as likely as non-registered carers.
+              </p>")
+
+text30 <- HTML("<H2> Hospital Admissions - A&E </H2>
+              <br>
+              However, when we look at the percentage of the population who 
+              attended A&E, we find that generally registered carers are more 
+              likely than non-registered carers to attend A&E, when split by 
+              sex and age-band.
+              <br>
+              <br>
+              This increase is generally seen more in female patients than male,
+              and for both male and female the biggest differences are seen 
+              around 40-59 year olds (although female 18-79 year olds 
+              near-consistently show this trend, wheras it is only really seen
+              for male 30-59 year old patients).
+              </p>")
+
+text31 <- HTML('<p><br> <br> <br> <br> <br> <br> <br> <br></p>')
 
 nel_text <- HTML(
   "<span style='font-size:20px'>
@@ -591,9 +754,122 @@ nel_text <- HTML(
   the health needs of the two populations are.
   </p>")
 
-concludingtext <- HTML("")
-
-technicalnotes <- HTML("")
+concludingtext <- HTML(
+  "<span style='font-size:20px'>
+    Discussion and Conclusions
+  </span>
+  <br>
+  <br> 
+  <p>
+  In this work we have looked at unpaid carers in Leeds, focussing on 
+  registration rates by GP practices and secondary care interactions. By using
+  GP records it can be seen that registered carer rates have been generally 
+  increasing between 2016 and 2021, with particularly sharp increases in 2020, 
+  likely due to the COVID pandemic. However, proportionally it can be seen that 
+  registration rates are unequal across different demographic groups. The most
+  significant shortfalls were: men were around 40-50% less likely than women to 
+  register as carers; younger people (18-39) 10-20 times less likely than 
+  retirement-age people (70+); non-english speaks 10-40% less likely 
+  than English speaks; and Chinese and Black/Black British people significantly less likely
+  than White British people to register. Conversely, we have found that Indian 
+  and Pakistani patients are more likely than White British patients to register
+  as carers. While some of these factors are well 
+  correllated (for example with Chinese patients being significantly younger 
+  than White British patients - clustered around University ages - and hence 
+  lower registration rates could be expected), some ratios go against these
+  correlations, such as Indian and Pakistani patients who are generally younger
+  than White British patients, but feature higher rates of registration. Further
+  investigation is required to find out whether this is due to higher need (i.e.
+  higher levels of unregistered carers) or better GP interactions due to 
+  interventions, or a combination of both.
+  <br><br>
+  Looking at carer registrations broken down by month, in most ages we can 
+  clearly see spikes - before COVID these generally occured in the Autumn when
+  flu vaccinations were occuring, and hence either GPs were more likely to
+  record people as carers, or carers were more likely to contact their GPs.
+  During the COVID pandemic this shifted and was split by age: retirement-age
+  patients had a large increase in registrations at the beginning of the 
+  pandemic when work was undertaken to identify critically extremely vulnerable
+  patients (and hence their carers), while working-age patients had increased 
+  registrations at the onset of the vaccination drive, allowing them access to
+  earlier vaccinations than would be otherwise allowed purely based upon their
+  ages and known health conditions. On average, pre-COVID registration rates 
+  increased by 1.5-2 times during vaccine drives, and during COVID these 
+  increased further to 2-5.5 times.
+  <br><br>
+  However, while vaccine drives (and the shielding identification drive) have 
+  been very correlated with increased numbers of carer registrations, we find
+  that these registrations occur more often from areas of lower deprivation and
+  less often from areas of higher deprivation. Pre-COVID the effect was 
+  statistically significant, although small, for the full population deprivation
+  shift, and was significant when looking at only female registrations and 
+  younger carer registrations (<40) - although no significant effect was seen
+  in male registrations or older carer registrations. During the pandemic this
+  effect increased, with both greater changes in the average deprivation score
+  and more groups featuring statistically significant shifts.
+  <br><br>
+  These effects can be taken two ways - they show a clear and consistent trend
+  that, during periods of increased call for carer registration, the numbers
+  of carers registered increase greatly, suggesting that on the whole these 
+  drives are very successful in their aim. However, the pattern found for 
+  female and younger carers pre-COVID, and all carers during the pandemic, 
+  suggests that these drives are greatly more effective in areas of lower 
+  deprivation, where interactions with GP practices may be more routine. Future
+  commissioning should look into specific cases to see whether more 
+  communications or engagement could benefit these drives, if targetted to areas
+  of lower deprivation.
+  <br><br>
+  Finally, we considered the health needs of our registered carers. From the 
+  literature and through discussion with carers in our Task and Finish group,
+  we know that carers tend to have poorer health outcomes than similar 
+  non-carers, and we learned of specific cases where carers put off their own
+  health needs for that of the person they care for, worsening their health 
+  outcomes over time and in some cases resulting in longer spells in hospital
+  than would have been required if they were able to act sooner.
+  <br><br>
+  We approached this in two methods - firstly, we looked at registered carer
+  risk scores using the Cambridge Multimorbidity Score, and compared these to 
+  similar non-registered carers, splitting by sex and age-band. On comparison,
+  we found that registered carers are more similar with non-registerd carers 
+  10-15 years older than themselves. However, presently it is unknown whether
+  these patients' caring responsibilities has reduced their health outcomes 
+  (i.e. has caring aged them), or whether we only know about these carer because
+  of their already increased health needs, which has put them in more contact
+  with GPs and hence increased their chances of being recorded as a carer.
+  <br><br>
+  To investigate further, we next looked at hospital usage by registered carers 
+  and similar non-registered carers, comparing elective inpatient spells to 
+  A&E attendances. In theory, based upon carer stories, if carers tend to put
+  off medical procedures until they progress to a point where they can't be 
+  ignored, we would expect to see lower (or similar) rates of elective 
+  attendance but increased rates of emergency attendance. When splitting by 
+  sex and age-band, this is what we find: registered carers have broadly 
+  similar rates of elective attendance at hospital, but significantly higher
+  rates of attendance at A&E in most age-bands. While it is interesting that
+  these registered carers have similar rates of elective admission to hospital,
+  based upon their CMS scores we could have expected to find greater rates of
+  admission - suggesting that the carer anecdotes of cancelling appointments
+  due to any recovery time hold true for the full Leeds population.
+  <br><br>
+  Again, we are limited by the fact that we can only compare rates of carers 
+  <i>who have registered</i> to all other patients, and so future work will 
+  look into grouping patients into households by using a pseudo-household ID
+  from TPP/SystmOne, and identifying 'probable carers' based upon the 
+  health-needs of the property. An example would be a four person household, 
+  with two adults and two children, where one adult has an SMI indicator, or
+  an indicator for severely reduced mobility. Once a cohort of these patients
+  has been found, the above methods will be used to compare both the CMS scores
+  of 'probable carers' to registered carers, and compare the elective 
+  admission/A&E attendance rates of the two groups. This will help identify 
+  where interventions would be best placed; if 'probable' carer demographics
+  and history with GP practices broadly match those of registered carers then
+  future commissioning should look into working more closely with GPs to 
+  help increase rates of carer registration. If the two groups are found to 
+  differ significantly in either demographics of healthcare-interactions, then
+  more targetted interventions aimed at a community level should be 
+  investigated.
+  </p>"
+)
 
 ### ALL PLOT OBJECTS
 
@@ -657,7 +933,7 @@ introPlot <- ggplotly(introggPlot, tooltip = 'text') %>%
 ## Carer deprivation score density
 deprivation_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   group_by(signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
   group_by(deprivation_decile) %>%
@@ -714,24 +990,9 @@ deprivationTotalPlot <- deprivationTotalPlot %>%
 
 deprivationTotalPlot <- neaten_plotly_labels(deprivationTotalPlot)
 
-# Making legends nicer
-# df <- data.frame(
-#   id = seq_along(deprivationTotalPlot$x$data), 
-#   legend_entries = unlist(lapply(deprivationTotalPlot$x$data, `[[`, "name"))
-# )
-# df$legend_group <- gsub("^\\((.*?),\\d+\\)", "\\1", df$legend_entries)
-# df$is_first <- !duplicated(df$legend_group)
-# 
-# for (i in df$id) {
-#   is_first <- df$is_first[[i]]
-#   deprivationTotalPlot$x$data[[i]]$name <- df$legend_group[[i]]
-#   deprivationTotalPlot$x$data[[i]]$legendgroup <- deprivationTotalPlot$x$data[[i]]$name
-#   if (!is_first) deprivationTotalPlot$x$data[[i]]$showlegend <- FALSE
-# }
-
 deprivation_male_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   filter(sex == 'M') %>%
   group_by(sex, signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
@@ -790,7 +1051,7 @@ deprivationPlot <- deprivationPlot %>%
 
 deprivation_female_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   filter(sex == 'F') %>%
   group_by(sex, signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
@@ -848,28 +1109,12 @@ deprivationPlotF <- deprivationPlotF %>%
   )
 
 deprivationPlot <- subplot(deprivationPlot, deprivationPlotF)
-
-# # Making legends nicer
-# df <- data.frame(
-#   id = seq_along(deprivationPlot$x$data), 
-#   legend_entries = unlist(lapply(deprivationPlot$x$data, `[[`, "name"))
-# )
-# df$legend_group <- gsub("^\\((.*?),\\d+\\)", "\\1", df$legend_entries)
-# df$is_first <- !duplicated(df$legend_group)
-# 
-# for (i in df$id) {
-#   is_first <- df$is_first[[i]]
-#   deprivationPlot$x$data[[i]]$name <- df$legend_group[[i]]
-#   deprivationPlot$x$data[[i]]$legendgroup <- deprivationPlot$x$data[[i]]$name
-#   if (!is_first) deprivationPlot$x$data[[i]]$showlegend <- FALSE
-# }
-
 deprivationPlot <- neaten_plotly_labels(deprivationPlot)
 
 # Age Band
 deprivation_age_band_density <- carer_info %>%
   drop_na() %>% 
-  filter(age_band < 70) %>%
+  filter(age_band < 70, date < ymd('2020-01-01')) %>%
   group_by(age_band, signal) %>%
   mutate(mean_signal = mean(combined_score)) %>%
   group_by(deprivation_decile) %>%
@@ -893,21 +1138,6 @@ deprivationAgeBandPlot <- ggplotly(deprivation_age_band_density) %>%
     hoverlabel = list(bgcolor = 'whitesmoke', color = 'DarkGray')) %>% 
   config(displaylogo = F, showSendToCloud = F, displayModeBar = F)
 
-# # Making legends nicer
-# df <- data.frame(
-#   id = seq_along(deprivationAgeBandPlot$x$data), 
-#   legend_entries = unlist(lapply(deprivationAgeBandPlot$x$data, `[[`, "name"))
-# )
-# df$legend_group <- gsub("^\\((.*?),\\d+\\)", "\\1", df$legend_entries)
-# df$is_first <- !duplicated(df$legend_group)
-# 
-# for (i in df$id) {
-#   is_first <- df$is_first[[i]]
-#   deprivationAgeBandPlot$x$data[[i]]$name <- df$legend_group[[i]]
-#   deprivationAgeBandPlot$x$data[[i]]$legendgroup <- deprivationAgeBandPlot$x$data[[i]]$name
-#   if (!is_first) deprivationAgeBandPlot$x$data[[i]]$showlegend <- FALSE
-# }
-
 deprivationAgeBandPlot <- neaten_plotly_labels(deprivationAgeBandPlot)
 
 source('scripts/deprivationPlotsCovid.R')
@@ -916,3 +1146,5 @@ source('scripts/deprivationPlotsCovid.R')
 load(here('data/nelPlots.RData'))
 nel_reference <- filter(nel_plots[[1]]$data, group)
 load(here('data/compPlots.RData'))
+load(here('data/oddsPlot.RData'))
+load(here('data/hospitalAdmissionPlots.RData'))

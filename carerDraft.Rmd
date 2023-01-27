@@ -1,0 +1,385 @@
+---
+title: "Unpaid Carers in Leeds"
+author: "NDL Leeds, NHS West Yorkshire ICB"
+date: "2023-01-24"
+output: html_document
+---
+
+```{r echo = FALSE, include = FALSE}
+source('scripts/source_code_for_markdown.R')
+```
+
+```{r echo=FALSE}
+intro_text
+
+hr()
+br()
+
+section1_text
+```
+
+```{r echo=FALSE}
+group_id <- 'total'
+
+total_plot <- carer_registrations %>% 
+  filter(group == 'total') %>% 
+  ggplot(
+    aes(
+      year, 
+      100 * proportion, 
+      colour = factor(grouping),
+      text = paste0(
+        'Year: ', year,
+        '\n', str_to_title(str_replace_all('total', '_', ' ')), ': ', grouping,
+        '\nPopulation Percentage: ', round(100 * proportion, 2), '%',
+        '\nLCL [95%]: ', round(100 * lcl, 2), '%',
+        '\nUCL [95%]: ', round(100 * ucl, 2), '%'
+      )
+    )
+  ) + 
+  geom_errorbar(
+    aes(ymin = 100 * lcl, ymax = 100 * ucl)
+  ) + 
+  ylim(0, NA) +
+  scale_color_discrete(name = str_replace('total', 'total', 'population')) +
+  xlab('Year') +
+  ylab('Population [%]')
+
+group_id <- 'sex'
+
+sex_plot <- carer_registrations %>% 
+  filter(group == 'sex') %>% 
+  ggplot(
+    aes(
+      year, 
+      100 * proportion, 
+      colour = factor(grouping),
+      text = paste0(
+        'Year: ', year,
+        '\n', str_to_title(str_replace_all(group_id, '_', ' ')), ': ', grouping,
+        '\nPopulation Percentage: ', round(100 * proportion, 2), '%',
+        '\nLCL [95%]: ', round(100 * lcl, 2), '%',
+        '\nUCL [95%]: ', round(100 * ucl, 2), '%'
+      )
+    )
+  ) + 
+  geom_errorbar(
+    aes(ymin = 100 * lcl, ymax = 100 * ucl)
+  ) + 
+  ylim(0, NA) +
+  scale_color_discrete(name = str_replace(group_id, 'total', 'population')) +
+  xlab('Year') +
+  ylab('Population [%]')
+
+group_id <- 'age_band'
+age_band_plot <- carer_registrations %>% 
+  filter(group == 'age_band') %>% 
+  ggplot(
+    aes(
+      age_band, 
+      100 * proportion, 
+      colour = factor(year),
+      text = paste0(
+        'Year: ', year,
+        '\n', str_to_title(str_replace_all(group_id, '_', ' ')), ': ', grouping,
+        '\nPopulation Percentage: ', round(100 * proportion, 2), '%',
+        '\nLCL [95%]: ', round(100 * lcl, 2), '%',
+        '\nUCL [95%]: ', round(100 * ucl, 2), '%'
+      )
+    )
+  ) + 
+  geom_errorbar(
+    aes(ymin = 100 * lcl, ymax = 100 * ucl)
+  ) + 
+  ylim(0, NA) +
+  scale_color_discrete(name = 'Year') +
+  xlab('Age Band') +
+  ylab('Population [%]') +
+  facet_wrap(~ year, nrow = 1)
+   
+group_id <- 'imd'
+imd_plot <- carer_registrations %>%
+    mutate(
+        grouping = as.integer(grouping)
+    ) %>% 
+    filter(group == 'imd') %>% 
+    ggplot(
+        aes(
+            grouping, 
+            100 * proportion, 
+            colour = factor(year),
+            text = paste0(
+                'Year: ', year,
+                '\n', str_to_title(str_replace_all(group_id, '_', ' ')), ': ', grouping,
+                '\nPopulation Percentage: ', round(100 * proportion, 2), '%',
+                '\nLCL [95%]: ', round(100 * lcl, 2), '%',
+                '\nUCL [95%]: ', round(100 * ucl, 2), '%'
+            )
+        )
+    ) + 
+    geom_errorbar(
+        aes(ymin = 100 * lcl, ymax = 100 * ucl)
+    ) + 
+    ylim(0, NA) +
+    scale_color_discrete(name = 'Year') +
+    xlab('IMD Decile') +
+    ylab('Population [%]') +
+    facet_wrap(~ year, nrow = 1)
+
+
+text1
+br()
+
+HTML('<center>')
+
+gridExtra::grid.arrange(
+  grobs = list(total_plot, sex_plot),
+  ncol = 2,
+  as.table = FALSE
+)
+HTML('</center>')
+```
+
+
+```{r echo=FALSE}
+text3
+br()
+HTML('<center>')
+
+age_band_plot +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = 'none'
+  )
+HTML('</center>')
+```
+
+```{r echo=FALSE}
+text4 
+br()
+HTML('<center>')
+
+imd_plot +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+    legend.position = 'none'
+  )
+HTML('</center>')
+```
+
+```{r echo=FALSE}
+mid_text
+br()
+text5
+br()
+
+group_id <- 'assumed'
+language_plot <- carer_language %>%
+  filter(
+    !language %in% unlist(
+      ifelse(
+        group_id == 'language',
+        'assumed_english',
+        list(c('english', 'unknown'))
+      )
+    )
+  ) %>%
+  mutate(
+    language = str_to_title(str_replace_all(language, '_', ' ')),
+    carer = if_else(carer, 'Carer', 'Non-Carer')
+  ) %>%
+  group_by(date, carer) %>%
+  mutate(
+    text = ifelse(
+      group_id == 'language',
+      paste0(
+        'Month: ', date,
+        '\nEnglish: ', round(percentage[language == 'English'], 2), '%',
+        '\nNon-English: ', round(percentage[language == 'Non English'], 2), '%',
+        '\nUnknown: ', round(percentage[language == 'Unknown'], 2), '%'
+      ),
+      paste0(
+        'Month: ', date,
+        '\nAssumed English: ', round(percentage[language == 'Assumed English'], 2), '%',
+        '\nNon-English: ', round(percentage[language == 'Non English'], 2), '%'
+      )
+    )
+  ) %>%
+  ggplot(aes(text = text)) +
+    geom_bar(aes(date, percentage, fill = language), stat = 'identity') +
+    facet_wrap(~ carer) +
+    ylab('Registered Population [%]') +
+    xlab('')
+
+HTML('<center>')
+
+language_plot
+
+HTML('</center>')
+```
+
+```{r echo = FALSE}
+br()
+text7
+br()
+
+HTML('<center>')
+language_age_band
+HTML('</center>')
+```
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+br()
+text8
+br()
+
+HTML('<center>')
+oddsPlot
+HTML('</center>')
+br()
+hr()
+```
+
+```{r echo = FALSE}
+text9
+br()
+
+plot <- data %>%
+  ggplot() +
+    geom_rect(
+        aes(xmin = ymd('2016-09-01'), xmax = ymd('2016-11-01'), ymin = n_min, ymax = n_max),
+        alpha = 0.02
+    ) +
+    geom_rect(
+        aes(xmin = ymd('2017-09-01'), xmax = ymd('2017-11-01'), ymin = n_min, ymax = n_max),
+        alpha = 0.02
+    ) +
+    geom_rect(
+        aes(xmin = ymd('2018-09-01'), xmax = ymd('2018-11-01'), ymin = n_min, ymax = n_max),
+        alpha = 0.02
+    ) +
+    geom_rect(
+        aes(xmin = ymd('2019-09-01'), xmax = ymd('2019-11-01'), ymin = n_min, ymax = n_max),
+        alpha = 0.02
+    ) +
+    geom_step(aes(gp_date, n, colour = sex), size = 1, direction = 'vh') +
+    facet_wrap(~ age_band, scales = 'free_y', nrow = 2) +
+    theme(legend.position = 'none') +
+    labs(x = '', y = 'Carer Registrations') +
+    ylim(0, NA)
+
+br()
+
+HTML('<center>')
+plot
+HTML('</center>')
+```
+
+```{r echo = FALSE}
+HTML('<center>')
+deprivationTotalPlot
+HTML('</center>')
+```
+
+
+```{r echo = FALSE}
+br()
+text17
+br()
+
+plot <- covid_data %>%
+  ggplot() +
+    geom_rect(
+      aes(xmin = ymd('2021-01-01'), xmax = ymd('2021-03-01'), ymin = n_min, ymax = n_max),
+      data = filter(covid_data, age_band < 70),
+      alpha = 0.05
+    ) +
+    geom_rect(
+      aes(xmin = ymd('2020-03-01'), xmax = ymd('2020-05-01'), ymin = n_min, ymax = n_max),
+      data = filter(covid_data, age_band > 50),
+      alpha = 0.05
+    ) +
+    geom_step(aes(gp_date, n, colour = sex), size = 1, direction = 'vh') +
+    facet_wrap(~ age_band, scales = 'free_y', nrow = 2) +
+    theme(legend.position = 'none') +
+    labs(x = '', y = '') +
+    ylim(0, NA)
+
+HTML('<center>')
+plot
+HTML('</center>')
+br()
+```
+```{r echo = FALSE}
+HTML('<center>')
+deprivationTotalPlotCovid
+HTML('</center>')
+hr()
+```
+
+
+<!-- ```{r echo = FALSE, fig.height = 11} -->
+<!-- nelPlots <- list() -->
+
+<!-- for (offset in seq(0, 25, 5)) { -->
+<!--   nelPlots[[1 + offset/5]] <- nel_plots[[offset + 1]] + -->
+<!--     scale_fill_discrete(name = 'Carer') + -->
+<!--     xlab('Cambridge Emergency Admission Score') + -->
+<!--     annotate( -->
+<!--       'text', -->
+<!--       label = paste('Age carers by', offset, 'years'), -->
+<!--       size = 4, -->
+<!--       x = 600, -->
+<!--       y = 0.005 -->
+<!--     ) + -->
+<!--     geom_density(aes(nel), data = nel_reference, kernel = 'rectangular', size = 0.5) -->
+<!-- } -->
+
+<!-- HTML('<center>') -->
+<!-- gridExtra::grid.arrange( -->
+<!--   grobs = nelPlots, -->
+<!--   ncol = 2, -->
+<!--   as.table = TRUE -->
+<!-- ) -->
+<!-- HTML('</center>') -->
+<!-- ``` -->
+
+```{r echo = FALSE}
+nel_text
+br()
+
+nelPlot <- comp_plot[[1]] +
+        scale_fill_discrete(name = 'Carer') +
+        xlab('Cambridge Emergency Admission Score')
+
+HTML('<center>')
+nelPlot
+HTML('</center>')
+```
+
+```{r echo = FALSE}
+nelPlot <- comp_plot[[2]] +
+        scale_fill_discrete(name = 'Carer') +
+        xlab('Cambridge Emergency Admission Score')
+
+HTML('<center>')
+nelPlot
+HTML('</center>')
+```
+
+```{r echo = FALSE}
+text29
+
+HTML('<center>')
+ip_plot
+HTML('</center>')
+HTML('<center>')
+ae_plot
+HTML('</center>')
+hr()
+```
+
+```{r echo = FALSE}
+br()
+concludingtext
+```
