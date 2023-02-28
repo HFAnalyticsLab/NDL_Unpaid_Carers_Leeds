@@ -5,3 +5,4 @@
 .Rapp.history
 rsconnect
 *.Rproj
+data/*

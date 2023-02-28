@@ -7,7 +7,9 @@ output: html_document
 
 ```{r echo = FALSE, include = FALSE}
 source('scripts/source_code_for_markdown.R')
+
 ```
+
 
 ```{r echo=FALSE}
 intro_text
@@ -17,6 +19,7 @@ br()
 
 section1_text
 ```
+
 
 ```{r echo=FALSE}
 group_id <- 'total'
@@ -129,6 +132,10 @@ imd_plot <- carer_registrations %>%
 
 text1
 br()
+```
+
+
+```{r fig.cap="__Figure 1:__ The number of GP registered carers as a percentage of total Leeds population (18+) __(a)__ and the number of male and female GP registered carers as a proportion total males and females in Leeds __(b)__", fig.align='left', echo=FALSE}
 
 HTML('<center>')
 
@@ -138,10 +145,12 @@ gridExtra::grid.arrange(
   as.table = FALSE
 )
 HTML('</center>')
+
 ```
 
 
-```{r echo=FALSE}
+```{r fig.cap="__Figure 2:__ The number of GP registered carers in each age band from 2016 to 2021, as a percentage of Leeds population (18+), fig.align='left', echo=FALSE}
+
 text3
 br()
 HTML('<center>')
@@ -152,11 +161,20 @@ age_band_plot +
     legend.position = 'none'
   )
 HTML('</center>')
+
 ```
 
+
 ```{r echo=FALSE}
+
 text4 
 br()
+
+```
+
+
+```{r fig.cap="__Figure 3:__ The number of GP registered carers in each IMD decile from 2016 to 2021, as a percentage of Leeds population (18+), fig.align='left', echo=FALSE}
+
 HTML('<center>')
 
 imd_plot +
@@ -172,6 +190,8 @@ mid_text
 br()
 text5
 br()
+
+
 
 group_id <- 'assumed'
 language_plot <- carer_language %>%
@@ -210,39 +230,58 @@ language_plot <- carer_language %>%
     facet_wrap(~ carer) +
     ylab('Registered Population [%]') +
     xlab('')
+```
+
+
+```{r fig.cap="__Figure 4:__ The number of carers whose 1st language is assumed to be English as a percentage of all registered GP patients __(a)__ The percentage of all GP registered patients whose 1st language is assumed to be English __(b)__, fig.align='left', echo=FALSE}
 
 HTML('<center>')
 
 language_plot
 
 HTML('</center>')
+
 ```
+
 
 ```{r echo = FALSE}
 br()
 text7
 br()
+```
+
+
+```{r fig.cap="__Figure 5:__ The percentage of Non-English speaking carers in each age band __(blue)__ compared to Non-English speakers who haven't registered as a carer __(red)__, between 2016 and 2021, fig.align='left', echo=FALSE}
 
 HTML('<center>')
 language_age_band
 HTML('</center>')
+
 ```
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE}
 br()
 text8
 br()
+```
+
+
+```{r fig.cap="__Figure 6:__ check convention for stating OR / null hypothesis etc, fig.align='left', echo=FALSE}
+
 
 HTML('<center>')
 oddsPlot
 HTML('</center>')
 br()
 hr()
+
 ```
+
 
 ```{r echo = FALSE}
 text9
 br()
+
 
 plot <- data %>%
   ggplot() +
@@ -270,15 +309,25 @@ plot <- data %>%
 
 br()
 
+```
+
+
+```{r fig.cap="__Figure 8:__ Monthly number of GP registered carers between 2016 and 2021 __(red)__ broken down by age band. Periods of flu vaccination drives are highlighted in grey", fig.align='left', echo=FALSE}
+
 HTML('<center>')
 plot
 HTML('</center>')
+
 ```
 
-```{r echo = FALSE}
+
+```{r fig.cap="__Figure 9:__ check convention for stating OR / null hypothesis etc, fig.align='left', echo=FALSE}
+
+
 HTML('<center>')
 deprivationTotalPlot
 HTML('</center>')
+
 ```
 
 
