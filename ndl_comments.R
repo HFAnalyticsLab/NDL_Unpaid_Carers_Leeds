@@ -5,12 +5,18 @@
 
 ## figs --------------------------------------------------------------------
 # labelled figs / save as .csv
-
+ls()
 # from markdown objects
-total_plot$data %>% 
-  write.csv(x = ., file = "gp_figure1_a.csv")
+a <- read_rds(file = "data/overallCarerRegistrations.rds")
+a2_gp
 
-sex_plot$data
+total_plot$data %>% 
+  summarise(n = sum(gp_population))
+  # write.csv(x = ., file = "gp_figure1_a.csv")
+
+sex_plot$data %>% 
+  # group_by(sex) %>% 
+  summarise(n = sum(gp_population))
 
 age_band_plot$data
 
@@ -33,8 +39,6 @@ nelPlot$data
 ip_plot$data
 
 ae_plot$data
-
-
 
 # end ---------------------------------------------------------------------
 
