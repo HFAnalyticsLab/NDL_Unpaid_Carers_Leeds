@@ -1,6 +1,6 @@
-# Project 3 Reports on Support for unpaid carers in Leeds
+# Support for unpaid carers in Leeds
 
-Report is in both scrollytelling format (shiny app) and Rmarkdown format
+The Project 3 Report is in both scrollytelling format (shiny app) and Rmarkdown format
 (html). To run either project, please run `app.R` or `carerDraft.Rmd`, to 
 generate the shiny app or static html report respectively.
 
