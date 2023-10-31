@@ -1,13 +1,10 @@
 # Project 3 Reports on Support for unpaid carers in Leeds
 
-================
-
 Report is in both scrollytelling format (shiny app) and Rmarkdown format
 (html). To run either project, please run `app.R` or `carerDraft.Rmd`, to 
 generate the shiny app or static html report respectively.
 
 ## Background
-================
 
 Network Data Lab in Leeds has conducted research to establish gaps in the knowledge of the Leeds population regarding the needs of unpaid carers and the utilisation of services by unpaid carers.  This paper pulls together the main headlines of 2 pieces of analytics. 
 
