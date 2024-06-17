@@ -1,0 +1,9 @@
+read_code_v2, description
+9N470,Counselling appointment cancelled by patient
+9N47.,Appt cancelled by patient
+9kK0.,Choice and booking appointment cancelled by patient
+9kh1.,Cancelled appointment at extended hours clinic
+9N471,Referral cancelled by patient
+9NFD.,Home visit cancelled by patient
+ZV642,Cancelled operative procedure [by patient]
+9N42.,DNA no reason

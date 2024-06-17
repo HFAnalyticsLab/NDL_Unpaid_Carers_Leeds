@@ -1,0 +1,86 @@
+code,coding_system,description,entity,list_name,upload_date
+1B1L.,Read,Stress-related problem,diagnostic,956 - res175: stress,17/03/2021
+E28..,Read,Acute reaction to stress (& [combat fatigue]),diagnostic,956 - res175: stress,17/03/2021
+E280.,Read,Acute panic state due to acute stress reaction,diagnostic,956 - res175: stress,17/03/2021
+E281.,Read,Acute fugue state due to acute stress reaction,diagnostic,956 - res175: stress,17/03/2021
+E282.,Read,Acute stupor state due to acute stress reaction,diagnostic,956 - res175: stress,17/03/2021
+E283.,Read,Other acute stress reactions,diagnostic,956 - res175: stress,17/03/2021
+E2830,Read,Acute situational disturbance,diagnostic,956 - res175: stress,17/03/2021
+E2831,Read,Acute post-trauma stress state,diagnostic,956 - res175: stress,17/03/2021
+E283z,Read,Other acute stress reaction NOS,diagnostic,956 - res175: stress,17/03/2021
+E284.,Read,Stress reaction causing mixed disturbance of emotion and conduct,diagnostic,956 - res175: stress,17/03/2021
+E29..,Read,Adjustment disorder,diagnostic,956 - res175: stress,17/03/2021
+E290.,Read,Brief depressive adjustment reaction,diagnostic,956 - res175: stress,17/03/2021
+E290z,Read,Brief depressive reaction NOS,diagnostic,956 - res175: stress,17/03/2021
+E291.,Read,Prolonged depressive adjustment reaction,diagnostic,956 - res175: stress,17/03/2021
+E292.,Read,Adjustment reaction with predominant disturbance of other emotions,diagnostic,956 - res175: stress,17/03/2021
+E2921,Read,Adolescent emancipation disorder,diagnostic,956 - res175: stress,17/03/2021
+E2922,Read,Early adult emancipation disorder,diagnostic,956 - res175: stress,17/03/2021
+E2923,Read,Specific academic &/or work inhibition,symptom,956 - res175: stress,17/03/2021
+E2924,Read,Adjustment reaction with anxious mood,diagnostic,956 - res175: stress,17/03/2021
+E2925,Read,Culture shock,diagnostic,956 - res175: stress,17/03/2021
+E292y,Read,Adjustment reaction with mixed disturbance of emotion,diagnostic,956 - res175: stress,17/03/2021
+E292z,Read,Adjustment reaction with disturbance of other emotion NOS,diagnostic,956 - res175: stress,17/03/2021
+E293.,Read,Adjustment reaction with predominant disturbance of conduct,diagnostic,956 - res175: stress,17/03/2021
+E2930,Read,Adjustment reaction with aggression,diagnostic,956 - res175: stress,17/03/2021
+E2931,Read,Adjustment reaction with antisocial behaviour,diagnostic,956 - res175: stress,17/03/2021
+E2932,Read,Adjustment reaction with destructiveness,diagnostic,956 - res175: stress,17/03/2021
+E293z,Read,Adjustment reaction with predominant disturbance of conduct NOS,diagnostic,956 - res175: stress,17/03/2021
+E294.,Read,Adjustment reaction with mixed disturbance of emotion and conduct,diagnostic,956 - res175: stress,17/03/2021
+E29y.,Read,Other adjustment reactions,diagnostic,956 - res175: stress,17/03/2021
+E29y0,Read,Concentration camp syndrome,diagnostic,956 - res175: stress,17/03/2021
+E29y1,Read,Other post-traumatic stress disorder,diagnostic,956 - res175: stress,17/03/2021
+E29y2,Read,Adjustment reaction with physical symptoms,diagnostic,956 - res175: stress,17/03/2021
+E29y3,Read,Elective mutism due to an adjustment reaction,diagnostic,956 - res175: stress,17/03/2021
+E29y5,Read,Other adjustment reaction with withdrawal,diagnostic,956 - res175: stress,17/03/2021
+E29yz,Read,Other adjustment reactions NOS,diagnostic,956 - res175: stress,17/03/2021
+E29z.,Read,Adjustment reaction NOS,diagnostic,956 - res175: stress,17/03/2021
+Eu4..,Read,[X]Neurotic,diagnostic,956 - res175: stress,17/03/2021
+Eu40.,Read,[X]Phobic anxiety disorders,diagnostic,956 - res175: stress,17/03/2021
+Eu40y,Read,[X]Other phobic anxiety disorders,diagnostic,956 - res175: stress,17/03/2021
+Eu40z,Read,[X]Phobic anxiety disorder Unspecified,diagnostic,956 - res175: stress,17/03/2021
+Eu41.,Read,[X]Other anxiety disorders,diagnostic,956 - res175: stress,17/03/2021
+Eu413,Read,[X]Other mixed anxiety disorders,diagnostic,956 - res175: stress,17/03/2021
+Eu41z,Read,[X]Anxiety disorder  unspecified,diagnostic,956 - res175: stress,17/03/2021
+Eu430,Read,[X] Acute stress reaction (& [crisis reaction] or [crisis state] or [psychic shock] or [combat fatig,diagnostic,956 - res175: stress,17/03/2021
+Eu432,Read,[X] Adjustment disorders (& [culture shock] or [grief reaction] or [hospitalism in children]),diagnostic,956 - res175: stress,17/03/2021
+Eu43y,Read,[X]Other reactions to severe stress,diagnostic,956 - res175: stress,17/03/2021
+Eu43z,Read,[X]Reaction to severe stress  unspecified,diagnostic,956 - res175: stress,17/03/2021
+Eu46.,Read,[X]Other neurotic disorders,diagnostic,956 - res175: stress,17/03/2021
+Eu46z,Read,[X]Neurotic disorder  unspecified,diagnostic,956 - res175: stress,17/03/2021
+K586.,Read,Stress incontinence - female,diagnostic,956 - res175: stress,17/03/2021
+Ry15.,Read,[D]Undue concern and preoccupation with stressful events,symptom,956 - res175: stress,17/03/2021
+Ryu58,Read,[X]State of emotional shock and stress  unspecified,symptom,956 - res175: stress,17/03/2021
+Ua165,Read,Feeling stressed,symptom,956 - res175: stress,17/03/2021
+Ub014,Read,Stress management,symptom,956 - res175: stress,17/03/2021
+X00Sf,Read,Post-traumatic stress disorder,diagnostic,956 - res175: stress,17/03/2021
+X301U,Read,Stress-related gastritis,diagnostic,956 - res175: stress,17/03/2021
+X76AY,Read,Work stress,symptom,956 - res175: stress,17/03/2021
+Xa18j,Read,Combat fatigue,diagnostic,956 - res175: stress,17/03/2021
+Xa18v,Read,Shell shock,diagnostic,956 - res175: stress,17/03/2021
+Xa7mz,Read,Carer stress syndrome,diagnostic,956 - res175: stress,17/03/2021
+Xa8HQ,Read,Tower block syndrome,diagnostic,956 - res175: stress,17/03/2021
+Xa8HR,Read,Wife unable to cope,symptom,956 - res175: stress,17/03/2021
+XaA2F,Read,Stress mapping,symptom,956 - res175: stress,17/03/2021
+XaBUD,Read,Stress monitoring call,symptom,956 - res175: stress,17/03/2021
+XaEFB,Read,Chronic post-traumatic stress disorder,diagnostic,956 - res175: stress,17/03/2021
+XaI8j,Read,Stress counselling,symptom,956 - res175: stress,17/03/2021
+XaJgP,Read,Stress-induced epilepsy,diagnostic,956 - res175: stress,17/03/2021
+XaWye,Read,Stress cardiomyopathy,diagnostic,956 - res175: stress,17/03/2021
+XaX55,Read,Acute post-traumatic stress disorder following military combat,diagnostic,956 - res175: stress,17/03/2021
+XaX56,Read,Chronic post-traumatic stress disorder following military combat,diagnostic,956 - res175: stress,17/03/2021
+XaX58,Read,Delayed post-traumatic stress disorder following military combat,diagnostic,956 - res175: stress,17/03/2021
+XE0pM,Read,Stress at home,symptom,956 - res175: stress,17/03/2021
+XE0rR,Read,Stress incontinence,symptom,956 - res175: stress,17/03/2021
+XE1bo,Read,Acute reaction to stress (& [post-traumatic] or [shell-shock]),diagnostic,956 - res175: stress,17/03/2021
+XE1Ym,Read,Acute stress reaction,diagnostic,956 - res175: stress,17/03/2021
+XE1Yn,Read,Acute stress reaction NOS,diagnostic,956 - res175: stress,17/03/2021
+XE1Yp,Read,Specific academic or work inhibition,diagnostic,956 - res175: stress,17/03/2021
+XE1Zj,Read,[X]Other specified anxiety disorders,diagnostic,956 - res175: stress,17/03/2021
+XE2Nh,Read,Stress monitoring admin.,symptom,956 - res175: stress,17/03/2021
+XM0As,Read,Stress and adjustment reaction,diagnostic,956 - res175: stress,17/03/2021
+XM1aI,Read,Stress at work,symptom,956 - res175: stress,17/03/2021
+XM1Am,Read,Undue concern and preoccupation with stressful events,symptom,956 - res175: stress,17/03/2021
+XM1Q3,Read,Specific work inhibition,symptom,956 - res175: stress,17/03/2021
+ZV4B2,Read,Stressful work schedule,symptom,956 - res175: stress,17/03/2021
+ZVu4E,Read,[X]Other stressful life events affecting family and household,symptom,956 - res175: stress,17/03/2021

@@ -1,3 +1,6 @@
+# Git tools
+/*.git.bfg-report
+
 # History files
 .Rhistory
 .Rapp.history

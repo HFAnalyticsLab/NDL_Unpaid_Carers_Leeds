@@ -1,0 +1,82 @@
+code,coding_system,description,entity,list_name,upload_date
+E00..00,Read,Senile and presenile organic psychotic conditions,diagnostic,241 - res21: Dementia,20/04/2015
+E000.00,Read,Uncomplicated senile dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E001.00,Read,Presenile dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E001000,Read,Uncomplicated presenile dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E00..11,Read,Senile dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E001100,Read,Presenile dementia with delirium,diagnostic,241 - res21: Dementia,20/04/2015
+E00..12,Read,Senile/presenile dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E001200,Read,Presenile dementia with paranoia,diagnostic,241 - res21: Dementia,20/04/2015
+E001300,Read,Presenile dementia with depression,diagnostic,241 - res21: Dementia,20/04/2015
+E001z00,Read,Presenile dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+E002.00,Read,Senile dementia with depressive or paranoid features,diagnostic,241 - res21: Dementia,20/04/2015
+E002000,Read,Senile dementia with paranoia,diagnostic,241 - res21: Dementia,20/04/2015
+E002100,Read,Senile dementia with depression,diagnostic,241 - res21: Dementia,20/04/2015
+E002z00,Read,Senile dementia with depressive or paranoid features NOS,diagnostic,241 - res21: Dementia,20/04/2015
+E003.00,Read,Senile dementia with delirium,diagnostic,241 - res21: Dementia,20/04/2015
+E004.00,Read,Arteriosclerotic dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E004000,Read,Uncomplicated arteriosclerotic dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E004100,Read,Arteriosclerotic dementia with delirium,diagnostic,241 - res21: Dementia,20/04/2015
+E004.11,Read,Multi infarct dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E004200,Read,Arteriosclerotic dementia with paranoia,diagnostic,241 - res21: Dementia,20/04/2015
+E004300,Read,Arteriosclerotic dementia with depression,diagnostic,241 - res21: Dementia,20/04/2015
+E004z00,Read,Arteriosclerotic dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+E00y.00,Read,Other senile and presenile organic psychoses,diagnostic,241 - res21: Dementia,20/04/2015
+E00y.11,Read,Presbyophrenic psychosis,diagnostic,241 - res21: Dementia,20/04/2015
+E00z.00,Read,Senile or presenile psychoses NOS,diagnostic,241 - res21: Dementia,20/04/2015
+E012.00,Read,Other alcoholic dementia,diagnostic,241 - res21: Dementia,20/04/2015
+E012000,Read,Chronic alcoholic brain syndrome,diagnostic,241 - res21: Dementia,20/04/2015
+E012.11,Read,Alcoholic dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+E041.00,Read,Dementia in conditions EC,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00.00,Read,[X]Dementia in Alzheimer's disease,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00000,Read,[X]Dementia in Alzheimer's disease with early onset,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00011,Read,[X]Presenile dementia;Alzheimer's type,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00012,Read,[X]Primary degen dementia; Alzheimer's type; presenile onset,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00013,Read,[X]Alzheimer's disease type 2,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00100,Read,[X]Dementia in Alzheimer's disease with late onset,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00111,Read,[X]Alzheimer's disease type 1,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00112,Read,[X]Senile dementia;Alzheimer's type,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00113,Read,[X]Primary degen dementia of Alzheimer's type; senile onset,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00200,Read,[X]Dementia in Alzheimer's dis; atypical or mixed type,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00z00,Read,[X]Dementia in Alzheimer's disease; unspecified,diagnostic,241 - res21: Dementia,20/04/2015
+Eu00z11,Read,[X]Alzheimer's dementia unspec,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01.00,Read,[X]Vascular dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01000,Read,[X]Vascular dementia of acute onset,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01100,Read,[X]Multi-infarct dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01.11,Read,[X]Arteriosclerotic dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01111,Read,[X]Predominantly cortical dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01200,Read,[X]Subcortical vascular dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01300,Read,[X]Mixed cortical and subcortical vascular dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01y00,Read,[X]Other vascular dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu01z00,Read,[X]Vascular dementia; unspecified,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02.00,Read,[X]Dementia in other diseases classified elsewhere,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02000,Read,[X]Dementia in Pick's disease,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02100,Read,[X]Dementia in Creutzfeldt-Jakob disease,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02200,Read,[X]Dementia in Huntington's disease,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02300,Read,[X]Dementia in Parkinson's disease,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02400,Read,[X]Dementia in human immunodef virus [HIV] disease,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02500,Read,[X]Lewy body dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02y00,Read,[X]Dementia in other specified diseases classif elsewhere,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z00,Read,[X] Unspecified dementia,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z11,Read,[X] Presenile dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z12,Read,[X] Presenile psychosis NOS,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z13,Read,[X] Primary degenerative dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z14,Read,[X] Senile dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z15,Read,[X] Senile psychosis NOS,diagnostic,241 - res21: Dementia,20/04/2015
+Eu02z16,Read,[X] Senile dementia; depressed or paranoid type,diagnostic,241 - res21: Dementia,20/04/2015
+Eu10711,Read,[X]Alcoholic dementia NOS,diagnostic,241 - res21: Dementia,20/04/2015
+F110.00,Read,Alzheimer's disease,diagnostic,241 - res21: Dementia,20/04/2015
+F110000,Read,Alzheimer's disease with early onset,diagnostic,241 - res21: Dementia,20/04/2015
+F110100,Read,Alzheimer's disease with late onset,diagnostic,241 - res21: Dementia,20/04/2015
+F111.00,Read,Pick's disease,diagnostic,241 - res21: Dementia,20/04/2015
+F112.00,Read,Senile degeneration of brain,diagnostic,241 - res21: Dementia,20/04/2015
+F116.00,Read,Lewy body disease,diagnostic,241 - res21: Dementia,20/04/2015
+Fyu3000,Read,[X]Other Alzheimer's disease,diagnostic,241 - res21: Dementia,20/04/2015
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
+,,,,,
